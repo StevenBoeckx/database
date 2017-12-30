@@ -6,6 +6,7 @@ use App\User;
 
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticateController extends Controller
 {
@@ -31,5 +32,18 @@ class AuthenticateController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
+    }
+    public function adduser(Request $request)
+    {
+        // grab credentials from the request
+        //dd('adduser');
+        $credentials = $request->only('email', 'password','name');
+        DB::table('users')->insert([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'remember_token'=> str_random(10),
+        ]);
+        return response()->json(['ok'],200);
     }
 }

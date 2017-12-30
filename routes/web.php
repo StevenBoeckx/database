@@ -16,6 +16,7 @@ Route::get('/', function () {
 });*/
 
 Route::post('/api/login', 'AuthenticateController@authenticate');
+Route::post('/api/signup', 'AuthenticateController@adduser');
 Route::get('/api/sensors', 'sensorRequest@getsensors');
 Route::any('{catchall}', function() {
     return View::make('index');
